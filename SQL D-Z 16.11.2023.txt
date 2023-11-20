@@ -1,0 +1,34 @@
+Вывести название и стоимость в USD одного самого дорогого проданного товара:
+
+SELECT ProductName, PriceUSD
+FROM Products
+ORDER BY PriceUSD DESC
+LIMIT 1;
+
+Вывести два самых дорогих товара из категории Beverages из USA:
+
+SELECT P.ProductName, P.PriceUSD
+FROM Products P
+JOIN Categories C ON P.CategoryID = C.CategoryID
+JOIN Suppliers S ON P.SupplierID = S.SupplierID
+WHERE C.CategoryName = 'Beverages' AND S.Country = 'USA'
+ORDER BY P.PriceUSD DESC
+LIMIT 2;
+
+Удалить товары с ценой менее 50 EUR:
+
+DELETE FROM Products
+WHERE PriceEUR < 50;
+
+Вывести список стран, которые поставляют морепродукты:
+
+SELECT DISTINCT S.Country
+FROM Suppliers S
+JOIN Products P ON S.SupplierID = P.SupplierID
+WHERE P.CategoryID = (SELECT CategoryID FROM Categories WHERE CategoryName = 'Seafood');
+
+Очистить поле ContactName у всех клиентов не из China:
+
+UPDATE Customers
+SET ContactName = NULL
+WHERE Country <> 'China';
